@@ -1,0 +1,165 @@
+messenger-db  | INSERT 0 3
+messenger-db  | INSERT 0 6
+messenger-db  | INSERT 0 3
+messenger-db  | INSERT 0 8
+messenger-db  | INSERT 0 3
+messenger-db  | INSERT 0 13
+messenger-db  | INSERT 0 21
+messenger-db  | INSERT 0 3
+messenger-db  | INSERT 0 3
+messenger-db  |          table_name         | count
+messenger-db  | ----------------------------+-------
+messenger-db  |  audit_log                  |     3
+messenger-db  |  contacts                   |     6
+messenger-db  |  conversation_last_messages |     3
+messenger-db  |  conversation_members       |     8
+messenger-db  |  conversations              |     3
+messenger-db  |  files                      |     3
+messenger-db  |  message_views              |    21
+messenger-db  |  messages                   |    13
+messenger-db  |  users                      |     3
+messenger-db  | (9 rows)
+messenger-db  |
+messenger-db  |   table_name
+messenger-db  | ---------------
+messenger-db  |  === USERS ===
+messenger-db  | (1 row)
+messenger-db  |
+messenger-db  |  user_id |  username  |       email       |    phone     | password_hash |   full_name    | avatar_url | status  |       last_seen        |       created_at       |          updated_at           | is_active | is_verified | timezone |                 bio                 | date_of_birth
+messenger-db  | ---------+------------+-------------------+--------------+---------------+----------------+------------+---------+------------------------+------------------------+-------------------------------+-----------+-------------+----------+-------------------------------------+---------------
+messenger-db  |        1 | alex2026   | alex@example.com  | +79161234567 | $2a$12$hash1  | Алексей Петров |            | online  | 2026-01-31 06:30:00+00 | 2025-12-01 07:00:00+00 | 2026-01-31 18:44:23.944831+00 | t         | t           | UTC      | Разработчик, увлекаюсь технологиями | 1995-03-15
+messenger-db  |        2 | maria_tech | maria@example.com | +79169876543 | $2a$12$hash2  | Мария Сидорова |            | away    | 2026-01-31 05:45:00+00 | 2025-12-02 08:00:00+00 | 2026-01-31 18:44:23.944831+00 | t         | t           | UTC      | Дизайнер UI/UX                      | 1993-08-22
+messenger-db  |        3 | ivan_dev   | ivan@example.com  | +79991234567 | $2a$12$hash3  | Иван Иванов    |            | offline | 2026-01-30 19:15:00+00 | 2025-12-03 09:00:00+00 | 2026-01-31 18:44:23.944831+00 | t         | t           | UTC      | Team Lead, менеджер проектов        | 1990-11-10
+messenger-db  | (3 rows)
+messenger-db  |
+messenger-db  |     table_name
+messenger-db  | ------------------
+messenger-db  |  === CONTACTS ===
+messenger-db  | (1 row)
+messenger-db  |
+messenger-db  |  contact_id | user_id | contact_user_id | nickname | is_favorite | is_blocked |       created_at       |          updated_at
+messenger-db  | ------------+---------+-----------------+----------+-------------+------------+------------------------+-------------------------------
+messenger-db  |           1 |       1 |               2 | Мария    | t           | f          | 2025-12-10 07:00:00+00 | 2026-01-31 18:44:23.948246+00
+messenger-db  |           2 |       1 |               3 | Иван     | f           | f          | 2025-12-11 08:00:00+00 | 2026-01-31 18:44:23.948246+00
+messenger-db  |           3 |       2 |               1 | Алексей  | t           | f          | 2025-12-10 09:00:00+00 | 2026-01-31 18:44:23.948246+00
+messenger-db  |           4 |       2 |               3 | Иван     | f           | f          | 2025-12-12 11:00:00+00 | 2026-01-31 18:44:23.948246+00
+messenger-db  |           5 |       3 |               1 | Алексей  | t           | f          | 2025-12-11 12:00:00+00 | 2026-01-31 18:44:23.948246+00
+messenger-db  |           6 |       3 |               2 | Мария    | f           | f          | 2025-12-13 13:00:00+00 | 2026-01-31 18:44:23.948246+00
+messenger-db  | (6 rows)
+messenger-db  |
+messenger-db  |       table_name
+messenger-db  | -----------------------
+messenger-db  |  === CONVERSATIONS ===
+messenger-db  | (1 row)
+messenger-db  |
+messenger-db  |  conversation_id | conversation_type |      title      | description | avatar_url | created_by |       created_at       |          updated_at           | is_active | is_private | max_members | metadata
+messenger-db  | -----------------+-------------------+-----------------+-------------+------------+------------+------------------------+-------------------------------+-----------+------------+-------------+----------
+messenger-db  |                1 | private           |                 |             |            |          1 | 2025-12-20 06:00:00+00 | 2026-01-31 18:44:23.950684+00 | t         | f          |        1000 | {}
+messenger-db  |                2 | group             | Команда проекта |             |            |          2 | 2025-12-21 07:00:00+00 | 2026-01-31 18:44:23.950684+00 | t         | f          |        1000 | {}
+messenger-db  |                3 | channel           | Tech News 2026  |             |            |          3 | 2025-12-22 08:00:00+00 | 2026-01-31 18:44:23.950684+00 | t         | f          |        1000 | {}
+messenger-db  | (3 rows)
+messenger-db  |
+messenger-db  |           table_name
+messenger-db  | ------------------------------
+messenger-db  |  === CONVERSATION_MEMBERS ===
+messenger-db  | (1 row)
+messenger-db  |
+messenger-db  |  member_id | conversation_id | user_id |  role  |       joined_at        | left_at | is_muted | is_pinned |                       notification_settings                        | custom_title |                                                   permissions
+messenger-db  | -----------+-----------------+---------+--------+------------------------+---------+----------+-----------+--------------------------------------------------------------------+--------------+------------------------------------------------------------------------------------------------------------------
+messenger-db  |          1 |               1 |       1 | owner  | 2025-12-20 06:00:00+00 |         | f        | t         | {"sound": true, "mobile": true, "desktop": true, "mentions": true} |              | {"send_media": true, "add_members": false, "change_info": false, "send_messages": true, "remove_members": false}
+messenger-db  |          2 |               1 |       2 | member | 2025-12-20 06:00:00+00 |         | f        | t         | {"sound": true, "mobile": true, "desktop": true, "mentions": true} |              | {"send_media": true, "add_members": false, "change_info": false, "send_messages": true, "remove_members": false}
+messenger-db  |          3 |               2 |       1 | admin  | 2025-12-21 07:00:00+00 |         | f        | f         | {"sound": true, "mobile": true, "desktop": true, "mentions": true} |              | {"send_media": true, "add_members": false, "change_info": false, "send_messages": true, "remove_members": false}
+messenger-db  |          4 |               2 |       2 | owner  | 2025-12-21 07:00:00+00 |         | f        | t         | {"sound": true, "mobile": true, "desktop": true, "mentions": true} |              | {"send_media": true, "add_members": false, "change_info": false, "send_messages": true, "remove_members": false}
+messenger-db  |          5 |               2 |       3 | member | 2025-12-21 07:05:00+00 |         | f        | f         | {"sound": true, "mobile": true, "desktop": true, "mentions": true} |              | {"send_media": true, "add_members": false, "change_info": false, "send_messages": true, "remove_members": false}
+messenger-db  |          6 |               3 |       1 | member | 2025-12-22 08:00:00+00 |         | f        | f         | {"sound": true, "mobile": true, "desktop": true, "mentions": true} |              | {"send_media": true, "add_members": false, "change_info": false, "send_messages": true, "remove_members": false}
+messenger-db  |          7 |               3 |       2 | member | 2025-12-22 08:00:00+00 |         | f        | f         | {"sound": true, "mobile": true, "desktop": true, "mentions": true} |              | {"send_media": true, "add_members": false, "change_info": false, "send_messages": true, "remove_members": false}
+messenger-db  |          8 |               3 |       3 | owner  | 2025-12-22 08:00:00+00 |         | f        | t         | {"sound": true, "mobile": true, "desktop": true, "mentions": true} |              | {"send_media": true, "add_members": false, "change_info": false, "send_messages": true, "remove_members": false}
+messenger-db  | (8 rows)
+messenger-db  |
+messenger-db  |   table_name
+messenger-db  | ---------------
+messenger-db  |  === FILES ===
+messenger-db  | (1 row)
+messenger-db  |
+messenger-db  |  file_id |  original_filename  |   stored_filename   |              file_path               | file_size |                                mime_type                                | uploader_id |      upload_date       | is_encrypted | encryption_key | md5_hash | sha256_hash | width | height | duration | thumbnail_path
+messenger-db  | ---------+---------------------+---------------------+--------------------------------------+-----------+-------------------------------------------------------------------------+-------------+------------------------+--------------+----------------+----------+-------------+-------+--------+----------+----------------
+messenger-db  |        1 | january_report.pdf  | report_jan26.pdf    | /uploads/2026/01/report_jan26.pdf    |   3123456 | application/pdf                                                         |           1 | 2026-01-15 07:00:00+00 | f            |                |          |             |       |        |          |
+messenger-db  |        2 | meeting_notes.docx  | meeting_31jan.docx  | /uploads/2026/01/meeting_31jan.docx  |   1048576 | application/vnd.openxmlformats-officedocument.wordprocessingml.document |           2 | 2026-01-30 08:00:00+00 | f            |                |          |             |       |        |          |
+messenger-db  |        3 | project_diagram.png | diagram_project.png | /uploads/2026/01/diagram_project.png |   2048576 | image/png                                                               |           3 | 2026-01-28 09:00:00+00 | f            |                |          |             |       |        |          |
+messenger-db  | (3 rows)
+messenger-db  |
+messenger-db  |     table_name
+messenger-db  | ------------------
+messenger-db  |  === MESSAGES ===
+messenger-db  | (1 row)
+messenger-db  |
+messenger-db  |  message_id | conversation_id | sender_id | message_type |                            content                             | file_id | parent_message_id |        sent_at         | edited_at | is_edited | is_deleted | deleted_at | deleted_by | forward_from_message_id | forward_from_conversation_id | reply_markup | entities |                                         search_vector
+messenger-db  | ------------+-----------------+-----------+--------------+----------------------------------------------------------------+---------+-------------------+------------------------+-----------+-----------+------------+------------+------------+-------------------------+------------------------------+--------------+----------+-----------------------------------------------------------------------------------------------
+messenger-db  |           1 |               1 |         1 | text         | Привет! Как дела?                                              |         |                   | 2026-01-31 06:00:00+00 |           | f         | f          |            |            |                         |                              |              |          | 'дела':3 'как':2 'привет':1
+messenger-db  |           2 |               1 |         2 | text         | Привет! Все хорошо, готовлюсь к встрече в 11:00                |         |                   | 2026-01-31 06:05:00+00 |           | f         | f          |            |            |                         |                              |              |          | '00':9 '11':8 'в':7 'все':2 'встрече':6 'готовлюсь':4 'к':5 'привет':1 'хорошо':3
+messenger-db  |           3 |               1 |         1 | text         | Отлично! У меня готов отчет за январь                          |         |                   | 2026-01-31 06:10:00+00 |           | f         | f          |            |            |                         |                              |              |          | 'готов':4 'за':6 'меня':3 'отлично':1 'отчет':5 'у':2 'январь':7
+messenger-db  |           4 |               1 |         1 | file         | Вот отчет по проекту                                           |       1 |                   | 2026-01-31 06:15:00+00 |           | f         | f          |            |            |                         |                              |              |          | 'вот':1 'отчет':2 'по':3 'проекту':4
+messenger-db  |           5 |               1 |         2 | text         | Спасибо! Посмотрю перед встречей                               |         |                   | 2026-01-31 06:20:00+00 |           | f         | f          |            |            |                         |                              |              |          | 'встречей':4 'перед':3 'посмотрю':2 'спасибо':1
+messenger-db  |           6 |               2 |         2 | text         | Коллеги, доброе утро! Напоминаю про встречу в 11:00            |         |                   | 2026-01-31 05:30:00+00 |           | f         | f          |            |            |                         |                              |              |          | '00':9 '11':8 'в':7 'встречу':6 'доброе':2 'коллеги':1 'напоминаю':4 'про':5 'утро':3
+messenger-db  |           7 |               2 |         3 | text         | Я готов. Принесу обновленные данные по проекту                 |         |                   | 2026-01-31 05:35:00+00 |           | f         | f          |            |            |                         |                              |              |          | 'готов':2 'данные':5 'обновленные':4 'по':6 'принесу':3 'проекту':7 'я':1
+messenger-db  |           8 |               2 |         1 | text         | У меня готов отчет, только что отправил Марии                  |         |                   | 2026-01-31 06:25:00+00 |           | f         | f          |            |            |                         |                              |              |          | 'готов':3 'марии':8 'меня':2 'отправил':7 'отчет':4 'только':5 'у':1 'что':6
+messenger-db  |           9 |               2 |         2 | file         | Повестка встречи                                               |       2 |                   | 2026-01-31 06:30:00+00 |           | f         | f          |            |            |                         |                              |              |          | 'встречи':2 'повестка':1
+messenger-db  |          10 |               2 |         3 | image        | Диаграмма архитектуры проекта                                  |       3 |                   | 2026-01-31 06:40:00+00 |           | f         | f          |            |            |                         |                              |              |          | 'архитектуры':2 'диаграмма':1 'проекта':3
+messenger-db  |          11 |               2 |         2 | text         | Отлично! До встречи через час                                  |         |                   | 2026-01-31 06:45:00+00 |           | f         | f          |            |            |                         |                              |              |          | 'встречи':3 'до':2 'отлично':1 'час':5 'через':4
+messenger-db  |          12 |               3 |         3 | text         | Важное обновление: миграция на новые серверы завершена успешно |         |                   | 2026-01-30 15:00:00+00 |           | f         | f          |            |            |                         |                              |              |          | 'важное':1 'завершена':7 'миграция':3 'на':4 'новые':5 'обновление':2 'серверы':6 'успешно':8
+messenger-db  |          13 |               3 |         3 | text         | Напоминание: бэкап данных перед обновлением ПО - 1 февраля     |         |                   | 2026-01-31 05:00:00+00 |           | f         | f          |            |            |                         |                              |              |          | '1':7 'бэкап':2 'данных':3 'напоминание':1 'обновлением':5 'перед':4 'по':6 'февраля':8
+messenger-db  | (13 rows)
+messenger-db  |
+messenger-db  |       table_name
+messenger-db  | -----------------------
+messenger-db  |  === MESSAGE_VIEWS ===
+messenger-db  | (1 row)
+messenger-db  |
+messenger-db  |  view_id | message_id | user_id |       viewed_at        | device_info | ip_address
+messenger-db  | ---------+------------+---------+------------------------+-------------+-------------
+messenger-db  |        1 |          1 |       2 | 2026-01-31 06:01:00+00 |             | 192.168.1.2
+messenger-db  |        2 |          2 |       1 | 2026-01-31 06:06:00+00 |             | 192.168.1.1
+messenger-db  |        3 |          3 |       2 | 2026-01-31 06:11:00+00 |             | 192.168.1.2
+messenger-db  |        4 |          4 |       2 | 2026-01-31 06:16:00+00 |             | 192.168.1.2
+messenger-db  |        5 |          5 |       1 | 2026-01-31 06:21:00+00 |             | 192.168.1.1
+messenger-db  |        6 |          6 |       1 | 2026-01-31 05:31:00+00 |             | 192.168.1.1
+messenger-db  |        7 |          6 |       3 | 2026-01-31 05:32:00+00 |             | 192.168.1.3
+messenger-db  |        8 |          7 |       1 | 2026-01-31 05:36:00+00 |             | 192.168.1.1
+messenger-db  |        9 |          7 |       2 | 2026-01-31 05:37:00+00 |             | 192.168.1.2
+messenger-db  |       10 |          8 |       2 | 2026-01-31 06:26:00+00 |             | 192.168.1.2
+messenger-db  |       11 |          8 |       3 | 2026-01-31 06:27:00+00 |             | 192.168.1.3
+messenger-db  |       12 |          9 |       1 | 2026-01-31 06:31:00+00 |             | 192.168.1.1
+messenger-db  |       13 |          9 |       3 | 2026-01-31 06:32:00+00 |             | 192.168.1.3
+messenger-db  |       14 |         10 |       1 | 2026-01-31 06:41:00+00 |             | 192.168.1.1
+messenger-db  |       15 |         10 |       2 | 2026-01-31 06:42:00+00 |             | 192.168.1.2
+messenger-db  |       16 |         11 |       1 | 2026-01-31 06:46:00+00 |             | 192.168.1.1
+messenger-db  |       17 |         11 |       3 | 2026-01-31 06:47:00+00 |             | 192.168.1.3
+messenger-db  |       18 |         12 |       1 | 2026-01-30 15:05:00+00 |             | 192.168.1.1
+messenger-db  |       19 |         12 |       2 | 2026-01-30 15:10:00+00 |             | 192.168.1.2
+messenger-db  |       20 |         13 |       1 | 2026-01-31 05:05:00+00 |             | 192.168.1.1
+messenger-db  |       21 |         13 |       2 | 2026-01-31 05:10:00+00 |             | 192.168.1.2
+messenger-db  | (21 rows)
+messenger-db  |
+messenger-db  |              table_name
+messenger-db  | ------------------------------------
+messenger-db  |  === CONVERSATION_LAST_MESSAGES ===
+messenger-db  | (1 row)
+messenger-db  |
+messenger-db  |  conversation_id | last_message_id |   last_message_time    | last_message_type | last_sender_id |          updated_at
+messenger-db  | -----------------+-----------------+------------------------+-------------------+----------------+-------------------------------
+messenger-db  |                1 |               5 | 2026-01-31 06:20:00+00 | text              |              2 | 2026-01-31 18:44:23.965232+00
+messenger-db  |                2 |              11 | 2026-01-31 06:45:00+00 | text              |              2 | 2026-01-31 18:44:23.965232+00
+messenger-db  |                3 |              13 | 2026-01-31 05:00:00+00 | text              |              3 | 2026-01-31 18:44:23.965232+00
+messenger-db  | (3 rows)
+messenger-db  |
+messenger-db  |     table_name
+messenger-db  | -------------------
+messenger-db  |  === AUDIT_LOG ===
+messenger-db  | (1 row)
+messenger-db  |
+messenger-db  |  audit_id | table_name | record_id | operation |      old_values       |                               new_values                               | changed_by |       changed_at       | ip_address  | user_agent
+messenger-db  | ----------+------------+-----------+-----------+-----------------------+------------------------------------------------------------------------+------------+------------------------+-------------+------------
+messenger-db  |         1 | users      |         1 | UPDATE    | {"status": "offline"} | {"status": "online"}                                                   |          1 | 2026-01-31 06:00:00+00 | 192.168.1.1 |
+messenger-db  |         2 | messages   |         1 | INSERT    |                       | {"content": "Привет! Как дела?", "sender_id": 1, "conversation_id": 1} |          1 | 2026-01-31 06:00:00+00 | 192.168.1.1 |
+messenger-db  |         3 | files      |         2 | INSERT    |                       | {"uploader_id": 2, "original_filename": "meeting_notes.docx"}          |          2 | 2026-01-30 08:00:00+00 | 192.168.1.2 |
+messenger-db  | (3 rows)
